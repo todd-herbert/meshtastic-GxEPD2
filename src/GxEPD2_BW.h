@@ -63,6 +63,7 @@
 #include "epd/GxEPD2_1248.h"
 #include "it8951/GxEPD2_it60.h"
 #include "it8951/GxEPD2_it60_1448x1072.h"
+#include "epd/GxEPD2_213_BN.h"  // Heltec Wireless Paper v1.0, backported from GxEPD v1.5.5
 
 template<typename GxEPD2_Type, const uint16_t page_height>
 class GxEPD2_BW : public GxEPD2_GFX_BASE_CLASS
