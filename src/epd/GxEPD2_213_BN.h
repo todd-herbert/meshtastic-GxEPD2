@@ -35,7 +35,7 @@ class GxEPD2_213_BN : public GxEPD2_EPD
     static const bool hasFastPartialUpdate = true;
     static const uint16_t power_on_time = 100; // ms, e.g. 95868us
     static const uint16_t power_off_time = 250; // ms, e.g. 140350us
-    static const uint16_t full_refresh_time = 8100; // ms, e.g. 4011934us
+    static const uint16_t full_refresh_time = 4100; // ms, e.g. 4011934us
     static const uint16_t partial_refresh_time = 750; // ms, e.g. 736721us
     // constructor
     GxEPD2_213_BN(int16_t cs, int16_t dc, int16_t rst, int16_t busy, SPIClass &spi);
