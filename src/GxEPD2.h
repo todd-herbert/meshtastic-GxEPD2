@@ -44,8 +44,8 @@ class GxEPD2
       GDEH0213B72,  Waveshare_2_13_bw_B72 = GDEH0213B72,
       GDEH0213B73,  Waveshare_2_13_bw_B73 = GDEH0213B73,
       GDEM0213B74,  Waveshare_2_13_bw_B74 = GDEM0213B74,
-      DEPG0213BN,   // Heltec Wireless Paper v1.0, backported from GxEPD v1.5.5
-      GDEM0213FC1,
+      DEPG0213BN,       // Heltec Wireless Paper v1.0, backported from GxEPD v1.5.5
+      LCMEN2R13EFC1,    // Heltec Wireless Paper v1.1, custom
       GDEW0213I5F, Waveshare_2_13_flex = GDEW0213I5F,
       GDEW0213M21,
       GDEW0213T5D,
