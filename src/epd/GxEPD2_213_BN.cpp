@@ -351,12 +351,8 @@ void GxEPD2_213_BN::_InitDisplay()
   _writeData(0x00);
   _writeCommand(0x11); //data entry mode
   _writeData(0x03);
-  _writeCommand(0x3C); //BorderWavefrom
-  _writeData(0x05);
   _writeCommand(0x21); //  Display update control
   _writeData(0x00);
-  _writeData(0x80);
-  _writeCommand(0x18); //Read built-in temperature sensor
   _writeData(0x80);
   _setPartialRamArea(0, 0, WIDTH, HEIGHT);
   _using_partial_mode = false;
@@ -385,8 +381,24 @@ const unsigned char GxEPD2_213_BN::lut_partial[] PROGMEM =
   0x22, 0x22, 0x22, 0x22, 0x22, 0x22, 0x0, 0x0, 0x0,
 };
 
+void GxEPD2_213_BN::_Init_Full()
+{
+  _InitDisplay();
+  _writeCommand(0x3C);  // Border Waveform
+  _writeData(0x05);
+  _writeCommand(0x18); //Read built-in temperature sensor
+  _writeData(0x80);
+  _using_partial_mode = false;
+}
+
+
 void GxEPD2_213_BN::_Init_Part()
 {
+  _InitDisplay();
+  _writeCommand(0x3C);  // Border Waveform
+  _writeData(0xC0);     // Floating (less noise-accumulation?)
+  _writeCommand(0x18); //Read built-in temperature sensor
+  _writeData(0x80);
   _writeCommand(0x32);
   _writeDataPGM(lut_partial, sizeof(lut_partial));
   _using_partial_mode = true;
@@ -394,7 +406,7 @@ void GxEPD2_213_BN::_Init_Part()
 
 void GxEPD2_213_BN::_Update_Full()
 {
-  _using_partial_mode = false;
+  if (_using_partial_mode) _Init_Full();
   _PowerOn();
   _writeCommand(0x22);
   _writeData(0xf4);
