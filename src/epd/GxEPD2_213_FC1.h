@@ -44,7 +44,7 @@ class GxEPD2_213_FC1 : public GxEPD2_EPD
     void refresh(bool partial_update_mode = false); // screen refresh from controller memory to full screen
     void refresh(int16_t x, int16_t y, int16_t w, int16_t h); // screen refresh from controller memory, fast-refresh
     void powerOff(); // turns off generation of panel driving voltages, avoids screen fading over time
-    void hibernate(); // turns powerOff() and sets controller to deep sleep for minimum power use, ONLY if wakeable by RST (rst >= 0)
+    void hibernate(); // For this display, no deep sleep, only power off. Preserves image memory for fast refresh
 
   // Unimplemented for meshtastic
   public:
