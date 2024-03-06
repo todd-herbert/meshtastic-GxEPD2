@@ -38,6 +38,7 @@ void GxEPD2_213_FC1::clearScreen(uint8_t value)
   _writeScreenBuffer(0x13, value); // Clear "NEW" (red) mem
   _writeScreenBuffer(0x10, value); // Clear "OLD" (black) mem
   refresh(false); // Full refresh
+  _PowerOff();
   _initial_write = false;
   _initial_refresh = false;
 }
