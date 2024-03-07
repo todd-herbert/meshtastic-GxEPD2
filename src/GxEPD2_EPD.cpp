@@ -96,9 +96,11 @@ void GxEPD2_EPD::_reset()
 
 void GxEPD2_EPD::_waitWhileBusy(const char* comment, uint16_t busy_time)
 {
-  // For full refreshes, meshtastic/firmare will poll GxEPD2_EPD::isBusy() instead of waiting here
+  // For full refreshes, meshtastic/firmare will poll GxEPD2_EPD::isBusy() instead of waiting here (for EInkDynamicDisplay only)
+#if defined(USE_EINK_DYNAMICDISPLAY)
   if (_isUpdatingFull(comment))
     return;
+#endif
 
   if (_busy >= 0)
   {
