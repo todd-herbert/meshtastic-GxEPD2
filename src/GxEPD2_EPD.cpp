@@ -255,11 +255,6 @@ bool GxEPD2_EPD::isBusy() {
 
 // Used to skip _waitWhileBusy(), for meshtastic async
 bool GxEPD2_EPD::_isUpdatingFull(const char* comment) {
-  // On first update, a fast-refresh might also clear screen using a full-refresh
-  // If meshtastic/firmware asked for fast-refresh, it will expect this full-refresh to block. So: force that to happen
-  if (_initial_refresh)
-    return false;
-
   // True if comment matches
   return ( strcmp(comment, "_Update_Full") == 0 );
 }
