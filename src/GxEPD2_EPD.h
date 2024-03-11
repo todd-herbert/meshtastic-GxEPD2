@@ -91,6 +91,7 @@ class GxEPD2_EPD
     {
       return (a > b ? a : b);
     };
+    bool isBusy();  // Used in meshtastic/firmware, to poll after nextPage(), for async full refresh
   protected:
     void _reset();
     void _waitWhileBusy(const char* comment = 0, uint16_t busy_time = 5000);
@@ -104,6 +105,7 @@ class GxEPD2_EPD
     void _startTransfer();
     void _transfer(uint8_t value);
     void _endTransfer();
+    bool _isUpdatingFull(const char* comment);  // Meshtastic: Determine if _waitWhileBusy() should be skipped (for async), by comparing the comment string..
   protected:
     int8_t _cs, _dc, _rst, _busy, _busy_level;
     uint32_t _busy_timeout;

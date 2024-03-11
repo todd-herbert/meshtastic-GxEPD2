@@ -96,6 +96,12 @@ void GxEPD2_EPD::_reset()
 
 void GxEPD2_EPD::_waitWhileBusy(const char* comment, uint16_t busy_time)
 {
+  // For full refreshes, meshtastic/firmare will poll GxEPD2_EPD::isBusy() instead of waiting here (for EInkDynamicDisplay only)
+#if defined(USE_EINK_DYNAMICDISPLAY)
+  if (_isUpdatingFull(comment))
+    return;
+#endif
+
   if (_busy >= 0)
   {
     delay(1); // add some margin to become active
@@ -240,4 +246,15 @@ void GxEPD2_EPD::_endTransfer()
 {
   if (_cs >= 0) digitalWrite(_cs, HIGH);
   _spi.endTransaction();
+}
+
+// Polled by meshtastic/firmware, during async full-refresh
+bool GxEPD2_EPD::isBusy() {
+  return (digitalRead(_busy) == _busy_level);
+}
+
+// Used to skip _waitWhileBusy(), for meshtastic async
+bool GxEPD2_EPD::_isUpdatingFull(const char* comment) {
+  // True if comment matches
+  return ( strcmp(comment, "_Update_Full") == 0 );
 }

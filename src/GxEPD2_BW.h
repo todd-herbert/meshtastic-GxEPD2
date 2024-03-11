@@ -12,6 +12,11 @@
 #ifndef _GxEPD2_BW_H_
 #define _GxEPD2_BW_H_
 
+// This version of meshtastic/GxEPD2 has been modified (defiled) to allow nextPage() to run full refreshes asynchronously
+// This macro ensures that the relevant modifications to meshtastic/firmware will only run with a correctly modified version of GxEPD2
+// Note: this async behavior is unrelated to the callback system implemented in newer versions of ZinggJM/GxEPD2
+#define HAS_EINK_ASYNCFULL
+
 // uncomment next line to use class GFX of library GFX_Root instead of Adafruit_GFX
 //#include <GFX.h>
 
@@ -239,6 +244,16 @@ class GxEPD2_BW : public GxEPD2_GFX_BASE_CLASS
       _second_phase = false;
     }
 
+    // Transplanted from nextPage(), non-paged, full refresh
+    // This is the code which runs after the refresh() call
+    // Method is called by meshtastic/firmware, once polling GxEPD2_BW::isBusy() reports that the physical refresh is complete
+    void endAsyncFull() {
+      if (epd2.hasFastPartialUpdate) {
+        epd2.writeImageAgain(_buffer, 0, 0, WIDTH, HEIGHT);
+      }
+      epd2.powerOff();
+    }
+
     bool nextPage()
     {
       if (1 == _pages)
@@ -258,12 +273,16 @@ class GxEPD2_BW : public GxEPD2_GFX_BASE_CLASS
         {
           epd2.writeImageForFullRefresh(_buffer, 0, 0, WIDTH, HEIGHT);
           epd2.refresh(false);
+#if defined(USE_EINK_DYNAMICDISPLAY)   // This macro defined in meshtastic/firmware
+          // -- meshtastic: moved to endAsyncFull() --
+#else
           if (epd2.hasFastPartialUpdate)
           {
             epd2.writeImageAgain(_buffer, 0, 0, WIDTH, HEIGHT);
             //epd2.refresh(true); // not needed
           }
           epd2.powerOff();
+#endif
         }
         return false;
       }

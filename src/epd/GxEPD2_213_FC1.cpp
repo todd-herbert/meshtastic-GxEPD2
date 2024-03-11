@@ -38,6 +38,7 @@ void GxEPD2_213_FC1::clearScreen(uint8_t value)
   _writeScreenBuffer(0x13, value); // Clear "NEW" (red) mem
   _writeScreenBuffer(0x10, value); // Clear "OLD" (black) mem
   refresh(false); // Full refresh
+  _PowerOff();
   _initial_write = false;
   _initial_refresh = false;
 }
@@ -158,19 +159,10 @@ void GxEPD2_213_FC1::powerOff()
   _PowerOff();
 }
 
-// Put the display into an extra-low power state. Hard reset required to wake.
-// Caution: will wipe display memory - problematic for fast-refresh, so not used by meshtastic
+// No hibernate for this display, only power off. Preserves image memory for fast refresh.
 void GxEPD2_213_FC1::hibernate()
 {
   _PowerOff();
-  if (_rst >= 0)
-  {
-    _writeCommand(0x07); // deep sleep mode
-    _writeData(0xA5);     // enter deep sleep
-    _hibernating = true;
-    _configured_for_full = false;
-    _configured_for_fast = false;
-  }
 }
 
 void GxEPD2_213_FC1::_PowerOn()
@@ -280,7 +272,6 @@ void GxEPD2_213_FC1::_Update_Full()
   _PowerOn();
   _writeCommand(0x12);
   _waitWhileBusy("_Update_Full", full_refresh_time);
-  _PowerOff();
 }
 
 void GxEPD2_213_FC1::_Update_Part()
@@ -289,7 +280,6 @@ void GxEPD2_213_FC1::_Update_Part()
   _PowerOn();
   _writeCommand(0x12);
   _waitWhileBusy("_Update_Part", partial_refresh_time);
-  _PowerOff();
 }
 
 // Fast refresh waveform is unofficial (experimental?)
