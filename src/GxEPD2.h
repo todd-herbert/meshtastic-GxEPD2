@@ -45,7 +45,7 @@ class GxEPD2
       GDEH0213B73,  Waveshare_2_13_bw_B73 = GDEH0213B73,
       GDEM0213B74,  Waveshare_2_13_bw_B74 = GDEM0213B74,
       DEPG0213BN,       // Heltec Wireless Paper v1.0, backported from GxEPD v1.5.5
-      LCMEN2R13EFC1,    // Heltec Wireless Paper v1.1, custom
+      LCMEN2R13EFC1,    // Heltec Wireless Paper v1.1 and HT-VME213, custom
       GDEW0213I5F, Waveshare_2_13_flex = GDEW0213I5F,
       GDEW0213M21,
       GDEW0213T5D,
@@ -56,6 +56,7 @@ class GxEPD2
       GDEW029T5D,
       GDEW029M06,
       GDEM029T94,
+      DEPG0290BNS800, // Heltec Vision Master E290, custom
       GDEW027W3,  Waveshare_2_7_bw = GDEW027W3,
       GDEW0371W7, Waveshare_3_7_bw = GDEW0371W7,
       GDEW042T2,  Waveshare_4_2_bw = GDEW042T2,
