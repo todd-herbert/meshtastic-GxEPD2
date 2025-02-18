@@ -61,6 +61,7 @@
 #include "epd/GxEPD2_371.h"
 #include "epd/GxEPD2_420.h"
 #include "epd/GxEPD2_420_M01.h"
+#include "epd/GxEPD2_579_GDEY0579T93.h"
 #include "epd/GxEPD2_583.h"
 #include "epd/GxEPD2_583_T8.h"
 #include "epd/GxEPD2_750.h"
