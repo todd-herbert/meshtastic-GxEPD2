@@ -13,8 +13,8 @@
 
 #include "GxEPD2_579_GDEY0579T93.h"
 
-GxEPD2_579_GDEY0579T93::GxEPD2_579_GDEY0579T93(int16_t cs, int16_t dc, int16_t rst, int16_t busy) :
-  GxEPD2_EPD(cs, dc, rst, busy, HIGH, 10000000, WIDTH, HEIGHT, panel, hasColor, hasPartialUpdate, hasFastPartialUpdate)
+GxEPD2_579_GDEY0579T93::GxEPD2_579_GDEY0579T93(int16_t cs, int16_t dc, int16_t rst, int16_t busy, SPIClass &spi) :
+  GxEPD2_EPD(cs, dc, rst, busy, HIGH, 10000000, WIDTH, HEIGHT, panel, hasColor, hasPartialUpdate, hasFastPartialUpdate, spi)
 {
 }
 
