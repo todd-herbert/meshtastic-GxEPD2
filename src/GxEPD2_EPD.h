@@ -85,12 +85,9 @@ class GxEPD2_EPD
     virtual void refresh(bool partial_update_mode = false) = 0; // screen refresh from controller memory to full screen
     virtual void refresh(int16_t x, int16_t y, int16_t w, int16_t h) = 0; // screen refresh from controller memory, partial screen
     virtual void powerOff() = 0; // turns off generation of panel driving voltages, avoids screen fading over time
+    virtual void powerOff() = 0; // turns off generation of panel driving voltages, avoids screen fading over time
     virtual void hibernate() = 0; // turns powerOff() and sets controller to deep sleep for minimum power use, ONLY if wakeable by RST (rst >= 0)
     virtual void setPaged() {}; // for GxEPD2_154c paged workaround
-    virtual void selectFastFullUpdate(bool) {}; // for some panels that support this
-    virtual void drawNativeColors() {}; // for test (7-color native mapping)
-    // register a callback function to be called during _waitWhileBusy continuously.
-    void setBusyCallback(void (*busyCallback)(const void*), const void* busy_callback_parameter = 0);
     static inline uint16_t gx_uint16_min(uint16_t a, uint16_t b)
     {
       return (a < b ? a : b);
@@ -99,7 +96,7 @@ class GxEPD2_EPD
     {
       return (a > b ? a : b);
     };
-    void selectSPI(SPIClass& spi, SPISettings spi_settings);
+    bool isBusy();  // Used in meshtastic/firmware, to poll after nextPage(), for async full refresh
   protected:
     void _reset();
     void _waitWhileBusy(const char* comment = 0, uint16_t busy_time = 5000);
@@ -113,11 +110,12 @@ class GxEPD2_EPD
     void _startTransfer();
     void _transfer(uint8_t value);
     void _endTransfer();
+    bool _isUpdatingFull(const char* comment);  // Meshtastic: Determine if _waitWhileBusy() should be skipped (for async), by comparing the comment string..
   protected:
     int16_t _cs, _dc, _rst, _busy, _busy_level;
     uint32_t _busy_timeout;
     bool _diag_enabled, _pulldown_rst_mode;
-    SPIClass* _pSPIx;
+    SPIClass &_spi;
     SPISettings _spi_settings;
     bool _initial_write, _initial_refresh;
     bool _power_is_on, _using_partial_mode, _hibernating;
