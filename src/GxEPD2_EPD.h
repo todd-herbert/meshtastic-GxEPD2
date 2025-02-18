@@ -1,7 +1,7 @@
 // Display Library for SPI e-paper panels from Dalian Good Display and boards from Waveshare.
-// Requires HW SPI and Adafruit_GFX. Caution: the e-paper panels require 3.3V supply AND data lines!
+// Requires HW SPI and Adafruit_GFX. Caution: these e-papers require 3.3V supply AND data lines!
 //
-// Display Library based on Demo Example from Good Display: https://www.good-display.com/companyfile/32/
+// based on Demo Example from Good Display: http://www.e-paper-display.com/download_list/downloadcategoryid=34&isMode=false.html
 //
 // Author: Jean-Marc Zingg
 //
@@ -18,7 +18,6 @@
 #include <GxEPD2.h>
 
 #pragma GCC diagnostic ignored "-Wunused-parameter"
-//#pragma GCC diagnostic ignored "-Wsign-compare"
 
 class GxEPD2_EPD
 {
@@ -31,11 +30,11 @@ class GxEPD2_EPD
     const bool hasPartialUpdate;
     const bool hasFastPartialUpdate;
     // constructor
-    GxEPD2_EPD(int16_t cs, int16_t dc, int16_t rst, int16_t busy, int16_t busy_level, uint32_t busy_timeout,
+    GxEPD2_EPD(int8_t cs, int8_t dc, int8_t rst, int8_t busy, int8_t busy_level, uint32_t busy_timeout,
                uint16_t w, uint16_t h, GxEPD2::Panel p, bool c, bool pu, bool fpu, SPIClass &spi = SPI);
+
     virtual void init(uint32_t serial_diag_bitrate = 0); // serial_diag_bitrate = 0 : disabled
-    virtual void init(uint32_t serial_diag_bitrate, bool initial, uint16_t reset_duration = 10, bool pulldown_rst_mode = false);
-    virtual void end(); // release SPI and control pins
+    virtual void init(uint32_t serial_diag_bitrate, bool initial, uint16_t reset_duration = 20, bool pulldown_rst_mode = false);
     //  Support for Bitmaps (Sprites) to Controller Buffer and to Screen
     virtual void clearScreen(uint8_t value) = 0; // init controller memory and screen (default white)
     virtual void writeScreenBuffer(uint8_t value) = 0; // init controller memory (default white)
@@ -79,9 +78,6 @@ class GxEPD2_EPD
     //                                int16_t x, int16_t y, int16_t w, int16_t h, bool invert = false, bool mirror_y = false, bool pgm = false) = 0;
     // write sprite of native data to controller memory, with screen refresh; x and w should be multiple of 8
     //    virtual void drawNative(const uint8_t* data1, const uint8_t* data2, int16_t x, int16_t y, int16_t w, int16_t h, bool invert = false, bool mirror_y = false, bool pgm = false) = 0;
-    // a demo bitmap can use yet another bitmap format, e.g. 7-color bitmap from Good Display for GDEY073D46
-    virtual void writeDemoBitmap(const uint8_t* data1, const uint8_t* data2, int16_t x, int16_t y, int16_t w, int16_t h, int16_t mode = 0, bool mirror_y = false, bool pgm = false){};
-    virtual void drawDemoBitmap(const uint8_t* data1, const uint8_t* data2, int16_t x, int16_t y, int16_t w, int16_t h, int16_t mode = 0, bool mirror_y = false, bool pgm = false){};
     virtual void refresh(bool partial_update_mode = false) = 0; // screen refresh from controller memory to full screen
     virtual void refresh(int16_t x, int16_t y, int16_t w, int16_t h) = 0; // screen refresh from controller memory, partial screen
     virtual void powerOff() = 0; // turns off generation of panel driving voltages, avoids screen fading over time
@@ -111,17 +107,14 @@ class GxEPD2_EPD
     void _endTransfer();
     bool _isUpdatingFull(const char* comment);  // Meshtastic: Determine if _waitWhileBusy() should be skipped (for async), by comparing the comment string..
   protected:
-    int16_t _cs, _dc, _rst, _busy, _busy_level;
+    int8_t _cs, _dc, _rst, _busy, _busy_level;
     uint32_t _busy_timeout;
     bool _diag_enabled, _pulldown_rst_mode;
-    SPIClass &_spi;
     SPISettings _spi_settings;
     bool _initial_write, _initial_refresh;
     bool _power_is_on, _using_partial_mode, _hibernating;
-    bool _init_display_done;
     uint16_t _reset_duration;
-    void (*_busy_callback)(const void*); 
-    const void* _busy_callback_parameter;
+    SPIClass &_spi;
 };
 
 #endif
