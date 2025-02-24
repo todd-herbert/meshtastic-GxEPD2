@@ -15,7 +15,7 @@
 #include "GxEPD2_420_GYE042A87.h"
 
 GxEPD2_420_GYE042A87::GxEPD2_420_GYE042A87(int16_t cs, int16_t dc, int16_t rst, int16_t busy, SPIClass &spi) :
-  GxEPD2_EPD(cs, dc, rst, busy, HIGH, 10000000, WIDTH, HEIGHT, panel, hasColor, hasPartialUpdate, hasFastPartialUpdate,, spi)
+  GxEPD2_EPD(cs, dc, rst, busy, HIGH, 10000000, WIDTH, HEIGHT, panel, hasColor, hasPartialUpdate, hasFastPartialUpdate, spi)
 {
 }
 
