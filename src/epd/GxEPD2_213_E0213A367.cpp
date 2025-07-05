@@ -1,22 +1,3 @@
-// ##########################################################
-// #   Meshtastic: Backported from GxEPD v1.5.5 to v1.3.4   #
-// #   (For Wireless Paper V1.0)                            #
-// ##########################################################
-//
-//
-// Display Library for SPI e-paper panels from Dalian Good Display and boards from Waveshare.
-// Requires HW SPI and Adafruit_GFX. Caution: the e-paper panels require 3.3V supply AND data lines!
-//
-// Panel: E0213A367 
-// Controller : SSD1682
-// Display: heltec-wireless-paper 2.13 inch : https://heltec.org/project/wireless-paper/
-//
-// Author: Quency-D
-//
-// Version: see library.properties
-//
-// Library: https://github.com/ZinggJM/GxEPD2
-
 #include "GxEPD2_213_E0213A367.h"
 
 GxEPD2_213_E0213A367::GxEPD2_213_E0213A367(int16_t cs, int16_t dc, int16_t rst, int16_t busy, SPIClass &spi) :

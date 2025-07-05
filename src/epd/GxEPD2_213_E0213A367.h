@@ -1,21 +1,12 @@
-// ##########################################################
-// #   Meshtastic: Backported from GxEPD v1.5.5 to v1.3.4   #
-// #   (For Wireless Paper V1.0)                            #
-// ##########################################################
+// Panel: Seekink E0213A367 : https://resource.heltec.cn/download/Wireless_Paper/E-Ink%20Datasheet/V1.2-E0213A367-BW.pdf
+// Controller : SSD1682 (undocumented)
 //
+// Author: Quency-D (Heltec)
 //
-// Display Library for SPI e-paper panels from Dalian Good Display and boards from Waveshare.
-// Requires HW SPI and Adafruit_GFX. Caution: the e-paper panels require 3.3V supply AND data lines!
-//
-// Panel: DEPG0213BN : https://www.dke.top/products/213-eiink-display
-// Controller : SSD1680 : https://www.good-display.com/companyfile/101.html
-// Display: LILYGO® T5 V2.3.1 2.13 inch : https://www.aliexpress.com/item/32869729970.html
-//
-// Author: Jean-Marc Zingg
-//
-// Version: see library.properties
-//
-// Library: https://github.com/ZinggJM/GxEPD2
+// --- NOTE! ---
+// This display is NOT officially supported by GxEPD2.
+// This fork is not affiliated with the original author.
+// This code is not intended for general use.
 
 #ifndef _GxEPD2_213_E0213A367_H_
 #define _GxEPD2_213_E0213A367_H_
@@ -29,14 +20,14 @@ class GxEPD2_213_E0213A367 : public GxEPD2_EPD
     static const uint16_t WIDTH = 128;
     static const uint16_t WIDTH_VISIBLE = 122;
     static const uint16_t HEIGHT = 250;
-    static const GxEPD2::Panel panel = GxEPD2::DEPG0213BN;
+    static const GxEPD2::Panel panel = GxEPD2::E0213A367;
     static const bool hasColor = false;
     static const bool hasPartialUpdate = true;
     static const bool hasFastPartialUpdate = true;
-    static const uint16_t power_on_time = 100; // ms, e.g. 95868us
-    static const uint16_t power_off_time = 250; // ms, e.g. 140350us
-    static const uint16_t full_refresh_time = 4100; // ms, e.g. 4011934us
-    static const uint16_t partial_refresh_time = 750; // ms, e.g. 736721us
+    static const uint16_t power_on_time = 0; // Undetermined, unused
+    static const uint16_t power_off_time = 0;
+    static const uint16_t full_refresh_time = 0;
+    static const uint16_t partial_refresh_time = 0;
     // constructor
     GxEPD2_213_E0213A367(int16_t cs, int16_t dc, int16_t rst, int16_t busy, SPIClass &spi);
     // methods (virtual)
